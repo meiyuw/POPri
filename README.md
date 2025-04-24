@@ -1,6 +1,6 @@
 # Private Federated Learning using Preference-Optimized Synthetic Data
 
-📃 [Paper](https://arxiv.org/abs/2403.20329) &middot; [bioRxiv Dataset](https://huggingface.co/datasets/hazylavender/biorxiv-abstract) &middot; [Congressional Dataset](https://huggingface.co/datasets/hazylavender/CongressionalDataset)
+📃 [Paper](https://arxiv.org/pdf/2504.16438) &middot; [bioRxiv Dataset](https://huggingface.co/datasets/hazylavender/biorxiv-abstract) &middot; [Congressional Dataset](https://huggingface.co/datasets/hazylavender/CongressionalDataset)
 
 This repository implements POPri (Preference Optimization for Private Client Data), an algorithm that reformulates synthetic data-based approaches for private on-device learning as an LLM preference optimization problem. 
 
