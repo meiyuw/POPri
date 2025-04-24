@@ -12,7 +12,7 @@ We substantially improve the utility of DP synthetic data relative to prior work
 
 ## News
 
-* `MM/DD/YYYY`: Initial release of POPri code and paper.
+* `04/23/2025`: Initial release of POPri code and paper.
 * `04/03/2025`: POPri is selected as one of the [spotlight papers](https://synthetic-data-iclr.github.io/#papers) of ICLR’25 workshop [Will Synthetic Data Finally Solve the Data Access Problem?](https://synthetic-data-iclr.github.io).
 * `03/03/2025`: POPri is accepted by the ICLR’25 workshop [Will Synthetic Data Finally Solve the Data Access Problem?](https://synthetic-data-iclr.github.io).
 
@@ -75,11 +75,13 @@ If you find our work helpful, please consider citing:
 
 ```bibtex
 @article{popri2024,
-  title={Private Federated Learning using Preference-Optimized Synthetic Data},
-  author={Charlie Hou, Mei-Yu Wang, Yige Zhu, Daniel Lazar, Giulia Fanti},
-  journal={arXiv preprint},
+  title={Private Federated Learning using Preference-Optimized Synthetic Data}, 
+  author={Charlie Hou and Mei-Yu Wang and Yige Zhu and Daniel Lazar and Giulia Fanti},
   year={2025},
-  url={}
+  eprint={2504.16438},
+  archivePrefix={arXiv},
+  primaryClass={cs.LG},
+  url={https://arxiv.org/abs/2504.16438}, 
 }
 ```
 
