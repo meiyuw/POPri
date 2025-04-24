@@ -74,7 +74,7 @@ This script will return the best achieved accuracy by the downstream model from 
 If you find our work helpful, please consider citing:
 
 ```bibtex
-@article{popri2024,
+@article{popri2025,
   title={Private Federated Learning using Preference-Optimized Synthetic Data}, 
   author={Charlie Hou and Mei-Yu Wang and Yige Zhu and Daniel Lazar and Giulia Fanti},
   year={2025},
