@@ -1,0 +1,8 @@
+List of 6 diverse original text samples:
+Original Text Sample 1
+{0}
+Original Text Sample 2
+{1}
+Original Text Sample 3
+{2}
+Original Text Sample 4\n
