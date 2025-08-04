@@ -2,46 +2,46 @@
 round_number: 0
 run_name: dpo-eps-1
 logging:
-  root_dir: /ocean/projects/cis250016p/chou1/bioarxiv/dpo_eps1/
+  root_dir: /work/hdd/bcvw/houcharlie/bioarxiv
   trial: 0
 
 dataset:
   num_pref_pairs: 1800
   rank_samples: 10
   reject_rank: 4 # zero-indexed
-  initial_set: /ocean/projects/cis250016p/shared/data/initialization_llama_trunc.json
-  client_data: /ocean/projects/cis250016p/shared/data/bio_arxiv/data/client_split/bioarxiv_train_msl_64_72000.json
-  eval_data: /ocean/projects/cis250016p/shared/data/bio_arxiv/data/bioarxiv_eval_msl_64_list.json
+  initial_set: /u/houcharlie/initial_set.json # please look in https://drive.google.com/drive/folders/1NEMEWArlJKxrlgAG9eJt4vfvt0iHWF03?usp=drive_link for this.
+  client_data: /u/houcharlie/bioarxiv_train.json # please look in https://drive.google.com/drive/folders/1NEMEWArlJKxrlgAG9eJt4vfvt0iHWF03?usp=drive_link for this.
+  eval_data: /u/houcharlie/bioarxiv_eval.json # please look in https://drive.google.com/drive/folders/1NEMEWArlJKxrlgAG9eJt4vfvt0iHWF03?usp=drive_link for this.
   prompt_template: generation_prompt.txt
   trunc_len: 64
 
 model: 
   model_path: meta-llama/Meta-Llama-3-8B
-  save_dir: /ocean/projects/cis250016p/chou1/pretrained_models
+  save_dir: /work/nvme/bdvm/houcharlie/pretrained_models
 
-trunc_model:
+trunc_model: # the tokenizer used to determine the truncation spot
   model_path: meta-llama/Meta-Llama-3-8B
-  save_dir: /ocean/projects/cis250016p/chou1/trunc_model
+  save_dir: /work/nvme/bdvm/houcharlie/trunc_model
 
 embedding_model:
   model: all-MiniLM-L6-v2
-  save_dir: /ocean/projects/cis250016p/chou1/pretrained_models
+  save_dir: /work/nvme/bdvm/houcharlie/pretrained_models
 
 downstream_model:
   model: distilgpt2
-  save_dir: /ocean/projects/cis250016p/chou1/pretrained_models
+  save_dir: /work/nvme/bdvm/houcharlie/pretrained_models
 
-downstream_eval_settings:
-  grad_accum_steps: 40
-  total_epochs: 80
-  batch_size: 160
+downstream_eval_settings: # set these to match the setting in the paper if you want to reproduce it
+  grad_accum_steps: 1
+  total_epochs: 10
+  batch_size: 32
   learning_rate: 0.0002
-  pretrained_eval_model_checkpoint: /ocean/projects/cis250016p/shared/baseline_expanded_trial0_checkpoint19.pth
-  generator_model: /ocean/projects/cis250016p/chou1/bioarxiv/cdpo-rank-1-0.02/trial0/training_logs/checkpoint-2850/merged_model
-  generated_samples: 1000000
+  pretrained_eval_model_checkpoint: /u/houcharlie/c4_finetune_distilgpt2.pth # please download it following the instructions in the readme
+  generator_model: /work/hdd/bcvw/houcharlie/bioarxiv/trial0/training_logs/checkpoint-150/merged_model
+  generated_samples: 1000 
 
 privacy:
-  noise: 19.3
+  noise: 19.3 
 
 vllm_sampling:
   temperature: 1.0
@@ -51,12 +51,12 @@ vllm_sampling:
 training:
   beta: 0.01
   batch_size: 4
-  in_round_epochs: 2
+  in_round_epochs: 1
   eval_batch_size: 4
   start_lr: 8e-07
   end_lr: 3e-07
-  gradient_accumulation: 3
-  num_gpus: 2
+  gradient_accumulation: 6
+  num_gpus: 1
   label_smoothing: 0.0
 
 

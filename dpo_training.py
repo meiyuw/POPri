@@ -116,17 +116,13 @@ def main(cfg: DictConfig):
         peft_config=peft_config,
     )
     trainer.model.print_trainable_parameters()
-    fsdp_plugin = trainer.accelerator.state.fsdp_plugin
-    fsdp_plugin.auto_wrap_policy = fsdp_auto_wrap_policy(trainer.model)
     if len(glob.glob(os.path.join(checkpoints_directory, 'training_logs')+'/checkpoint-*')) > 0:
         print('restart from previous checkpoint...')
         trainer.train(resume_from_checkpoint = True)
     else:
         trainer.train()
-    trainer.accelerator.state.fsdp_plugin.set_state_dict_type("FULL_STATE_DICT")
     trainer.save_model()
-    with contextlib.suppress(AssertionError):
-        torch.distributed.destroy_process_group()
+
 
 
 if __name__ == "__main__":

@@ -33,7 +33,7 @@ The full unprocessed datasets are available at:
 * [bioRxiv Dataset](https://huggingface.co/datasets/hazylavender/biorxiv-abstract)
 * [Congressional Dataset](https://huggingface.co/datasets/hazylavender/CongressionalDataset)
 
-We also provide the processed versions of the datasets (some truncation, splitting, partitioning into clients, etc.) that we used in our experiments in this [Google Drive Folder](https://drive.google.com/drive/folders/1NEMEWArlJKxrlgAG9eJt4vfvt0iHWF03?usp=drive_link). Using these datasets together with the code in this repo will ensure compatibility.
+We also provide the processed versions of the datasets (some truncation, splitting, partitioning into clients, etc.) that we used in our experiments in this [Google Drive Folder](https://drive.google.com/drive/folders/1NEMEWArlJKxrlgAG9eJt4vfvt0iHWF03?usp=drive_link). **Using these datasets together with the code in this repo will ensure compatibility.**
 
 ## Running POPri
 You can run POPri to privately finetune an LLM to generate high-quality synthetic data similar to user data by going into the popri directory and running
@@ -48,6 +48,7 @@ In the script, `CONF_PATH` denotes the relative path of the yaml config for the 
 * Under `privacy.noise`, we can control the privacy noise multiplier.
 * We will discuss `downstream_model` and `downstream_eval_settings` in the next section--these are settings we use to evaluate the POPri-trained LLM. You should leave this unspecified until the downstream evaluation.
 
+To reproduce the runs in the paper, please modify the config to match the settings in the paper. In particular, you need to download the datasets from the Google Drive Folder noted above and place the paths into the config file. Check the config file for more info.
 
 ## Determining privacy
 We provide a script to help with privacy accounting, `privacy_accountant.py`. To use it, follow these settings
@@ -59,15 +60,15 @@ Now, given a desired $\epsilon$ value, simply guess-and-check `noise_multiplier`
 
 
 ## Downstream evaluation
-First, generate synthetic data using a given LLM checkpoint trained by the model. This is done with the command (using our example config)
+First, generate synthetic data using a given LLM checkpoint trained by the model. This is done with the command (using our example config).
 ```
 python generate_downstream.py --config-path conf/bioarxiv --config-name dpo_eps1
 ```
-Then we can run the downstream next token prediction training:
+Download a distilgpt2 checkpoint from here https://drive.google.com/file/d/1pZXBvumOyihb4cXLtY3PjIEYvyYxRqdK/view?usp=sharing which was finetuned on the c4 dataset. Put its filepath into the config file under `downstream_eval_settings.pretrained_eval_model_checkpoint`, and put the filepath that you trained with POPri into `downstream_eval_settings.generator_model`. Then we can run the downstream next token prediction training:
 ```
 python downstream_eval.py --config-path conf/bioarxiv --config-name dpo_eps1
 ```
-This script will return the best achieved accuracy by the downstream model from training on the generated synthetic data.
+This script will return the best achieved accuracy by the downstream model from training on the generated synthetic data. Make sure to set the `downstream_eval_settings` appropriately if you want to reproduce the results in the paper.
 
 ## Citation
 
