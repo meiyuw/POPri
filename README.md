@@ -1,4 +1,4 @@
-# Private Federated Learning using Preference-Optimized Synthetic Data
+# [ICML2025] Private Federated Learning using Preference-Optimized Synthetic Data
 
 📃 [Paper](https://arxiv.org/pdf/2504.16438) &middot; [bioRxiv Dataset](https://huggingface.co/datasets/hazylavender/biorxiv-abstract) &middot; [Congressional Dataset](https://huggingface.co/datasets/hazylavender/CongressionalDataset)
 
@@ -11,7 +11,8 @@ We substantially improve the utility of DP synthetic data relative to prior work
 <img src="figures/alignfl-bar.png" width="300" alt="AlignFL Overview">
 
 ## News
-
+* `07/16/2025`: Poster session for POPri at ICML.
+* `05/09/2025`: POPri is accepted by ICML!
 * `04/23/2025`: Initial release of POPri code and paper.
 * `04/03/2025`: POPri is selected as one of the [spotlight papers](https://synthetic-data-iclr.github.io/#papers) of ICLR’25 workshop [Will Synthetic Data Finally Solve the Data Access Problem?](https://synthetic-data-iclr.github.io).
 * `03/03/2025`: POPri is accepted by the ICLR’25 workshop [Will Synthetic Data Finally Solve the Data Access Problem?](https://synthetic-data-iclr.github.io).
