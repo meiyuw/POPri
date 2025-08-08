@@ -16,6 +16,7 @@ import ray
 
 import gc
 import contextlib
+from utils import find_latest_checkpoint_path
 
 def extract_and_truncate_synthetic_samples(s, tokenizer, token_limit):
     extracted_samples = []
@@ -38,11 +39,6 @@ def main(cfg: DictConfig):
     os.makedirs(round_directory, exist_ok=True)
 
     seed = 2 ** (cfg.logging.trial + 1) * 3 ** (cfg.round_number + 1)
-    checkpoint_interval = cfg.dataset.num_pref_pairs // (
-        cfg.training.num_gpus
-        * cfg.training.batch_size
-        * cfg.training.gradient_accumulation
-    )
 
     if cfg.round_number == 0:
         llm = LLM(
@@ -53,18 +49,9 @@ def main(cfg: DictConfig):
             tensor_parallel_size=torch.cuda.device_count(),
         )
     else:
-        checkpoint_interval = cfg.dataset.num_pref_pairs // (
-            cfg.training.num_gpus
-            * cfg.training.batch_size
-            * cfg.training.gradient_accumulation
-        )
-        checkpoint_num = (
-            checkpoint_interval * cfg.training.in_round_epochs * cfg.round_number
-        )
-        
+        latest_ckpt_dir = find_latest_checkpoint_path(checkpoints_directory)
         merged_model_directory = os.path.join(
-            checkpoints_directory,
-            f"training_logs/checkpoint-{checkpoint_num}/merged_model",
+            latest_ckpt_dir, "merged_model",
         )
         print(merged_model_directory)
         llm = LLM(

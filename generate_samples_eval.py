@@ -16,6 +16,7 @@ import ray
 import gc
 import contextlib
 import sys
+from utils import find_latest_checkpoint_path
 
 def extract_and_truncate_synthetic_samples(s, tokenizer, token_limit):
     extracted_samples = []
@@ -40,22 +41,12 @@ def main(cfg: DictConfig):
 
     seed = 2 ** (cfg.logging.trial + 1) * 3 ** (cfg.round_number + 1)
 
-    checkpoint_interval = cfg.dataset.num_pref_pairs // (
-        cfg.training.num_gpus
-        * cfg.training.batch_size
-        * cfg.training.gradient_accumulation
-    )
-    checkpoint_num = (
-        checkpoint_interval * cfg.training.in_round_epochs * (cfg.round_number + 1)
-    )
-    merged_model_directory = os.path.join(
-        checkpoints_directory,
-        f"training_logs/checkpoint-{checkpoint_num}/merged_model",
-    )
+    latest_ckpt_dir = find_latest_checkpoint_path(checkpoints_directory)
+    merged_model_directory = os.path.join(latest_ckpt_dir, 'merged_model')
     print('Merged model directory', merged_model_directory)
     llm = LLM(
         merged_model_directory,
-        max_model_len=512,
+        max_model_len=cfg.dataset.max_model_len,
         seed=seed,
         tensor_parallel_size=torch.cuda.device_count(),
     )
@@ -73,12 +64,6 @@ def main(cfg: DictConfig):
     for idx in range(len(prompt_data)):
         curr_prompt = prompt_data[idx]
         prompt_list.append(curr_prompt)
-
-    checkpoint_interval = cfg.dataset.num_pref_pairs // (
-        cfg.training.num_gpus
-        * cfg.training.batch_size
-        * cfg.training.gradient_accumulation
-    )
 
     outputs = llm.generate(
         prompt_list,

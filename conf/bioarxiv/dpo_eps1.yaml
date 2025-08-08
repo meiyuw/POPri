@@ -2,7 +2,7 @@
 round_number: 0
 run_name: dpo-eps-1
 logging:
-  root_dir: /work/hdd/bcvw/houcharlie/bioarxiv
+  root_dir: /work/hdd/bcvw/houcharlie/bioarxiv-full-eps1
   trial: 0
 
 dataset:
@@ -14,6 +14,7 @@ dataset:
   eval_data: /u/houcharlie/bioarxiv_eval.json # please look in https://drive.google.com/drive/folders/1NEMEWArlJKxrlgAG9eJt4vfvt0iHWF03?usp=drive_link for this.
   prompt_template: generation_prompt.txt
   trunc_len: 64
+  max_model_len: 512
 
 model: 
   model_path: meta-llama/Meta-Llama-3-8B
@@ -54,7 +55,7 @@ training:
   in_round_epochs: 1
   eval_batch_size: 4
   start_lr: 8e-07
-  end_lr: 3e-07
+  end_lr: 8e-07
   gradient_accumulation: 6
   num_gpus: 1
   label_smoothing: 0.0

@@ -16,7 +16,7 @@ import torch
 
 from trl import DPOTrainer, DPOConfig
 from peft import LoraConfig
-from peft.utils.other import fsdp_auto_wrap_policy
+from utils import find_latest_checkpoint_path
 
 
 def set_dropout_(model: Module, prob: float):
@@ -75,13 +75,9 @@ def main(cfg: DictConfig):
     if cfg.round_number == 0:
             init_epoch = 0
     else:
-        checkpoint_interval = cfg.dataset.num_pref_pairs // (
-            cfg.training.num_gpus
-            * cfg.training.batch_size
-            * cfg.training.gradient_accumulation
-        )
-        checkpoint_num = checkpoint_interval * cfg.training.in_round_epochs * cfg.round_number
-        with open(os.path.join(checkpoints_directory, f'training_logs/checkpoint-{checkpoint_num}/trainer_state.json'), 'r', encoding='utf8') as f:
+        latest_ckpt_dir = find_latest_checkpoint_path(checkpoints_directory)
+        state_path = os.path.join(latest_ckpt_dir, "trainer_state.json")
+        with open(state_path, 'r', encoding='utf8') as f:
             trainer_state = json.load(f)
             init_epoch = trainer_state["epoch"]
     dpo_config = DPOConfig(
@@ -96,7 +92,7 @@ def main(cfg: DictConfig):
         save_strategy="epoch",
         logging_steps=1,
         lr_scheduler_type="cosine_with_min_lr",
-        warmup_steps=0,
+        warmup_steps=10,
         logging_strategy="steps",
         lr_scheduler_kwargs={"min_lr": cfg.training.end_lr},
         remove_unused_columns=False,

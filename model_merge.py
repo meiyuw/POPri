@@ -6,6 +6,7 @@ from transformers import (
     AutoTokenizer,
 )
 from peft import PeftModel
+from utils import find_latest_checkpoint_path
 import sys
 import os
 import shutil
@@ -25,18 +26,7 @@ def main(cfg: DictConfig):
     prev_model = AutoModelForCausalLM.from_pretrained(
         cfg.model.model_path, cache_dir=cfg.model.save_dir
     )
-    checkpoint_interval = cfg.dataset.num_pref_pairs // (
-        cfg.training.num_gpus
-        * cfg.training.batch_size
-        * cfg.training.gradient_accumulation
-    )
-    checkpoint_num = (
-        checkpoint_interval * cfg.training.in_round_epochs * (cfg.round_number + 1)
-    )
-    curr_checkpoint_directory = os.path.join(
-        checkpoints_directory,
-        f"training_logs/checkpoint-{checkpoint_num}",
-    )
+    curr_checkpoint_directory = find_latest_checkpoint_path(checkpoints_directory)
     merge_model_peft = PeftModel.from_pretrained(
         prev_model,
         curr_checkpoint_directory,

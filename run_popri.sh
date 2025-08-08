@@ -1,6 +1,4 @@
 #!/bin/bash
-MASTER_PORT=$(python find_free_port.py)
-echo $MASTER_PORT > /tmp/master_port.$SLURM_JOB_ID
 CONF_PATH="conf/bioarxiv"
 CONF_NAME="dpo_eps1"
 

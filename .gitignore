@@ -1,2 +1,4 @@
 .hydra/
 *.log
+*.pyc
+*.job
