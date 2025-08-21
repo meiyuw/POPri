@@ -1,16 +1,18 @@
-# [ICML2025] Private Federated Learning using Preference-Optimized Synthetic Data
+# [ICML2025] POPri: Private Federated Learning using Preference-Optimized Synthetic Data
 
 📃 [Paper](https://arxiv.org/pdf/2504.16438) &middot; [bioRxiv Dataset](https://huggingface.co/datasets/hazylavender/biorxiv-abstract) &middot; [Congressional Dataset](https://huggingface.co/datasets/hazylavender/CongressionalDataset)
 
-This repository implements POPri (Preference Optimization for Private Client Data), an algorithm that reformulates synthetic data-based approaches for private on-device learning as an LLM preference optimization problem. 
+This repository implements POPri (Policy Optimization for Private Data), an algorithm that reformulates synthetic data generation into a reinforcement learning (RL) problem. 
 
-<img src="figures/alignfl-overview.png" width="600" alt="AlignFL Overview">
+<img src="figures/popri-overview.png" width="600" alt="POPri Overview">
 
 We substantially improve the utility of DP synthetic data relative to prior work; on our bioRxiv dataset, POPri closes the gap between next-token prediction accuracy in the fully-private and non-private settings by up to 68%, compared to 52% for prior synthetic data methods, and 10% for state-of-the-art DP federated learning methods.
 
-<img src="figures/alignfl-bar.png" width="300" alt="AlignFL Overview">
+<img src="figures/biorxiv_barplot.png" width="300" alt="POPri barplot Overview">
 
 ## News
+* `08/15/2025`: Post-conference camera-ready update for ICML.
+* `08/13/2025`: Gave an invited talk on POPri at OpenAI.
 * `07/16/2025`: Poster session for POPri at ICML.
 * `05/09/2025`: POPri is accepted by ICML!
 * `04/23/2025`: Initial release of POPri code and paper.
@@ -76,14 +78,14 @@ This script will return the best achieved accuracy by the downstream model from 
 If you find our work helpful, please consider citing:
 
 ```bibtex
-@article{popri2025,
-  title={Private Federated Learning using Preference-Optimized Synthetic Data}, 
-  author={Charlie Hou and Mei-Yu Wang and Yige Zhu and Daniel Lazar and Giulia Fanti},
-  year={2025},
-  eprint={2504.16438},
-  archivePrefix={arXiv},
-  primaryClass={cs.LG},
-  url={https://arxiv.org/abs/2504.16438}, 
+@misc{popri2025,
+      title={POPri: Private Federated Learning using Preference-Optimized Synthetic Data}, 
+      author={Charlie Hou and Mei-Yu Wang and Yige Zhu and Daniel Lazar and Giulia Fanti},
+      year={2025},
+      eprint={2504.16438},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2504.16438}, 
 }
 ```
 
